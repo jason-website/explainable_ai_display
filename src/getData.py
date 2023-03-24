@@ -1,3 +1,4 @@
+import os.path
 import random
 
 import pandas as pd
@@ -5,11 +6,16 @@ from pylab import rcParams
 from keras.models import load_model
 from sklearn.model_selection import train_test_split
 
+HIST_CSV = "./dataset/data_preprosing_month_hist.csv"
+
+STANDARIZE_CSV = "./dataset/data_preprosing_month_hist_encode_standarize.csv"
+
+current_dir = os.path.dirname(__file__)
+
 
 def getData():
     rcParams['figure.figsize'] = 14, 8
-    df_o = pd.read_csv(
-        "/Users/yingchao.ji/Desktop/tw/thesisProjects/explainable_ai_display/src/dataset/data_preprosing_month_hist_encode_standarize.csv")
+    df_o = pd.read_csv(os.path.join(current_dir, STANDARIZE_CSV))
     df_o = df_o.drop(columns=['Latitude', 'Longitude', 'hist_fraud_trans_24h'])
     df2 = df_o
     cnt_non_fraud = df2[df2['Fraud'] == 0]['Amount'].count()
@@ -26,8 +32,7 @@ def getData():
     X_train = X_train.drop(columns=['index'])
     X_Train, Y_Train = X_train, Y_train
 
-    df_original = pd.read_csv(
-        "/Users/yingchao.ji/Desktop/tw/thesisProjects/explainable_ai_display/src/dataset/data_preprosing_month_hist.csv")
+    df_original = pd.read_csv(os.path.join(current_dir, HIST_CSV))
     columns = ['index', 'Amount', 'Use Chip', 'Errors', 'Fraud', 'Trans_hour', 'Day_of_week', 'MCC_Category',
                'Current Age', 'Gender', 'Latitude', 'Longitude', 'hist_trans_60d', 'hist_trans_24h',
                'hist_fraud_trans_24h', 'hist_trans_avg_amt_60d']

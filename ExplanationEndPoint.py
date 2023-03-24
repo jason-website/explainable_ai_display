@@ -1,4 +1,5 @@
 import json
+import os.path
 
 from adminui import *
 from keras.models import load_model
@@ -7,12 +8,16 @@ from src.getData import getData
 from flask import Flask, render_template
 import pandas as pd
 
+SRC_MODELS__HDF_ = './src/models/97.hdf5'
+
 app = Flask(__name__)
-autoencoder = load_model('/Users/yingchao.ji/Desktop/tw/thesisProjects/explainable_ai_display/src/models/97.hdf5')
+current_dir = os.path.dirname(__file__)
+autoencoder = load_model(os.path.join(current_dir, SRC_MODELS__HDF_))
 fraud, non_fraud, X_Train, Y_Train, x_test, df_original, X_test = getData()
 lime_explainer, shap_explainer, train_columns = getExplainers(X_Train, Y_Train, autoencoder)
 
 shap_plots = {}
+
 
 @app.route('/charts/<number>/<data>')
 def form_page(number, data):
