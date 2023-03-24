@@ -48,10 +48,11 @@ def random_num(fraud, non_fraud):
     f_l = len(fraud)
     n_f_l = len(non_fraud)
     result = []
-    result.append(fraud.iloc[random.randint(0, f_l)].New_ID)
-    result.append(fraud.iloc[random.randint(0, f_l)].New_ID)
-    result.append(fraud.iloc[random.randint(0, f_l)].New_ID)
-    result.append(non_fraud.iloc[random.randint(0, n_f_l)].New_ID)
-    result.append(non_fraud.iloc[random.randint(0, n_f_l)].New_ID)
+    for i in range(3):
+        result.append(fraud.iloc[random.randint(0, f_l)].New_ID)
+        result.append(fraud.iloc[random.randint(0, f_l)].New_ID)
+        result.append(fraud.iloc[random.randint(0, f_l)].New_ID)
+        result.append(non_fraud.iloc[random.randint(0, n_f_l)].New_ID)
+        result.append(non_fraud.iloc[random.randint(0, n_f_l)].New_ID)
     return result
     # 假设您已经准备好了您的数据和模型，这里只展示如何生成LIME的结果
