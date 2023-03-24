@@ -13,6 +13,9 @@ lime_explainer, shap_explainer, train_columns = getExplainers(X_Train, Y_Train, 
 
 shap_plots = {}
 app = AdminApp()
+app.app_title = "Explainable AI methods for credit card fraud detection: Evaluation of LIME and SHAP through a User Study"
+app.copyright_text = 'Yingchao Ji'
+app.footer_links = {'Thesis from Diva DataBase': 'https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1626230&dswid=-3187'}
 
 table_columns = [{'title': 'Index', 'dataIndex': 'number'}, {'title': 'Amount', 'dataIndex': 'Amount'},
                  {'title': 'Use Chip', 'dataIndex': 'Use Chip'}, {'title': 'Errors', 'dataIndex': 'Errors'},
