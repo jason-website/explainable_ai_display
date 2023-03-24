@@ -41,7 +41,7 @@ def get_table_data():
 
 
 def on_edit(item):
-    return NavigateTo("http://127.0.0.1:5000/charts/" + str(item['number']) + "/" + json.dumps(item))
+    return NavigateTo("http://0.0.0.0:5000/charts/" + str(item['number']) + "/" + json.dumps(item))
 
 
 def on_page(query):
