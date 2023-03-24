@@ -12,11 +12,12 @@ fraud, non_fraud, X_Train, Y_Train, x_test, df_original, X_test = getData()
 lime_explainer, shap_explainer, train_columns = getExplainers(X_Train, Y_Train, autoencoder)
 
 shap_plots = {}
-app = AdminApp()
+app = AdminApp(use_fastapi=True)
 app.app_title = "Explainable AI methods for credit card fraud detection: Evaluation of LIME and SHAP through a User Study"
 app.copyright_text = 'Yingchao Ji'
-app.footer_links = {'Thesis from Diva DataBase': 'https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1626230&dswid=-3187'}
-
+app.footer_links = {
+    'Thesis from Diva DataBase': 'https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1626230&dswid=-3187'}
+fastapi_app = app.prepare()
 table_columns = [{'title': 'Index', 'dataIndex': 'number'}, {'title': 'Amount', 'dataIndex': 'Amount'},
                  {'title': 'Use Chip', 'dataIndex': 'Use Chip'}, {'title': 'Errors', 'dataIndex': 'Errors'},
                  {'title': 'Trans_hour', 'dataIndex': 'Trans_hour'},
