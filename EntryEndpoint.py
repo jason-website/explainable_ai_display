@@ -27,7 +27,7 @@ table_columns = [{'title': 'Index', 'dataIndex': 'number'}, {'title': 'Amount', 
                                                                       {'text': 'No', 'value': 'No'}]}]
 
 
-def mock_table_data():
+def get_table_data():
     merged_df = pd.DataFrame()
     numbers = random_num(fraud, non_fraud)
     for i in numbers:
@@ -38,17 +38,13 @@ def mock_table_data():
     return json.loads(data)
 
 
-def on_view(item):
-    print(item)
-
-
 def on_edit(item):
     return NavigateTo("http://127.0.0.1:5000/charts/" + str(item['number']) + "/" + json.dumps(item))
 
 
 def on_page(query):
     print(query)
-    return TableResult(mock_table_data(), 15, query['current_page'])
+    return TableResult(get_table_data(), 15, query['current_page'])
 
 
 def on_modal_form_submit(form_data):
@@ -61,7 +57,7 @@ def table_page():
     return [
         Card(content=[
             DataTable("Example Table", columns=table_columns,
-                      data=TableResult(mock_table_data(), 15), on_data=on_page,
+                      data=TableResult(get_table_data(), 15), on_data=on_page,
                       filter_form=FilterForm([
                           SelectBox('Fraud', data=['Yes', 'No'], placeholder="Yes")
                       ], submit_text='Filter', reset_text='Clear'),
@@ -73,7 +69,7 @@ def table_page():
 
 
 app.set_as_shared_app()  # set the app as the shared app, so it can be accessed globally
-import chart
+import ExplanationEndPoint
 
 if __name__ == '__main__':
     app.run(port=5001)
