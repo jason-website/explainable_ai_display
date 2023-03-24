@@ -43,13 +43,14 @@ def on_edit(item):
 
 
 def on_page(query):
+    new_data = get_table_data()
     print(query)
-    return TableResult(get_table_data(), 15, query['current_page'])
-
-
-def on_modal_form_submit(form_data):
-    print(form_data)
-    return CloseModalForm()
+    try:
+        fraud_value = query['formValues']['fraud']
+        filter_data = [d for d in new_data if d.get('Fraud') == fraud_value]
+        return TableResult(filter_data, 10, query['current_page'])
+    except KeyError:
+        return TableResult(new_data, 15, query['current_page'])
 
 
 @app.page('/', 'Table')
@@ -59,7 +60,7 @@ def table_page():
             DataTable("Example Table", columns=table_columns,
                       data=TableResult(get_table_data(), 15), on_data=on_page,
                       filter_form=FilterForm([
-                          SelectBox('Fraud', data=['Yes', 'No'], placeholder="Yes")
+                          SelectBox('Fraud', data=['Yes', 'No'], placeholder="Choose Yes Or No")
                       ], submit_text='Filter', reset_text='Clear'),
                       row_actions=[
                           TableRowAction('edit', 'Check Explanations', on_click=on_edit),
