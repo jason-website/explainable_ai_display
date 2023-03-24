@@ -26,8 +26,7 @@ table_columns = [{'title': 'Index', 'dataIndex': 'number'}, {'title': 'Amount', 
                  {'title': 'Gender', 'dataIndex': 'Gender'}, {'title': 'hist_trans_60d', 'dataIndex': 'hist_trans_60d'},
                  {'title': 'hist_trans_24h', 'dataIndex': 'hist_trans_24h'},
                  {'title': 'hist_trans_avg_amt_60d', 'dataIndex': 'hist_trans_avg_amt_60d'},
-                 {'title': 'Fraud', 'dataIndex': 'Fraud', 'filters': [{'text': 'Yes', 'value': 'Yes'},
-                                                                      {'text': 'No', 'value': 'No'}]}]
+                 {'title': 'Fraud', 'dataIndex': 'Fraud'}]
 
 
 def get_table_data():
