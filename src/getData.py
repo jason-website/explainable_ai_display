@@ -3,7 +3,6 @@ import random
 
 import pandas as pd
 from pylab import rcParams
-from keras.models import load_model
 from sklearn.model_selection import train_test_split
 
 HIST_CSV = "./dataset/data_preprosing_month_hist.csv"

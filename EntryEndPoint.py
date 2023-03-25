@@ -1,13 +1,16 @@
 import json
+import os.path
 
 import pandas as pd
+import os
 from adminui import *
 from keras.models import load_model
 
 from src.explainers import getExplainers, getOriginalData
 from src.getData import getData, random_num
 
-autoencoder = load_model('/Users/yingchao.ji/Desktop/tw/thesisProjects/explainable_ai_display/src/models/97.hdf5')
+current_dir = os.path.dirname(__file__)
+autoencoder = load_model(os.path.join(current_dir, './src/models/97.hdf5'))
 fraud, non_fraud, X_Train, Y_Train, x_test, df_original, X_test = getData()
 lime_explainer, shap_explainer, train_columns = getExplainers(X_Train, Y_Train, autoencoder)
 
@@ -42,7 +45,9 @@ def get_table_data():
 
 
 def on_edit(item):
-    return NavigateTo("http://0.0.0.0:5000/charts/" + str(item['number']) + "/" + json.dumps(item))
+    host_address = os.environ.get('HOST_ADDRESS')
+    print("Host address is:", host_address)
+    return NavigateTo(f"http://{host_address}:5000/charts/" + str(item['number']) + "/" + json.dumps(item))
 
 
 def on_page(query):
