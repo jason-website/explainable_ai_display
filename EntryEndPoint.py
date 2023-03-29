@@ -12,6 +12,14 @@ from src.getData import getData, random_num
 current_dir = os.path.dirname(__file__)
 autoencoder = load_model(os.path.join(current_dir, './src/models/97.hdf5'))
 fraud, non_fraud, X_Train, Y_Train, x_test, df_original, X_test = getData()
+if not os.path.exists('temp'):
+    os.makedirs('temp')
+X_Train.to_csv('temp/X_Train.csv', index=True)
+Y_Train.to_csv('temp/Y_Train.csv', index=True)
+x_test.to_csv('temp/x_test_new_id.csv', index=True)
+df_original.to_csv('temp/df_original.csv', index=True)
+X_test.to_csv('temp/X_test.csv', index=True)
+
 lime_explainer, shap_explainer, train_columns = getExplainers(X_Train, Y_Train, autoencoder)
 
 shap_plots = {}
@@ -49,7 +57,8 @@ def on_edit(item):
     if host_address is None:
         host_address = "0.0.0.0"
     print("Host address is:", host_address)
-    return NavigateTo(f"http://{host_address}:5000/charts/" + str(item['number']) + "/" + json.dumps(item))
+    # item.to_csv('temp/transfer-data.csv', index=True)
+    return NavigateTo(f"http://{host_address}:5000/charts/" + str(item['number']))
 
 
 def on_page(query):
