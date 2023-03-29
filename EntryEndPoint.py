@@ -46,6 +46,8 @@ def get_table_data():
 
 def on_edit(item):
     host_address = os.environ.get('HOST_ADDRESS')
+    if host_address is None:
+        host_address = "0.0.0.0"
     print("Host address is:", host_address)
     return NavigateTo(f"http://{host_address}:5000/charts/" + str(item['number']) + "/" + json.dumps(item))
 
