@@ -1,4 +1,4 @@
-FROM explainable-ai-display-base
+FROM jason0722985179/explainable-ai-display-base:1.0
 
 ARG HOST_ADDRESS
 ENV HOST_ADDRESS ${HOST_ADDRESS}

@@ -15,34 +15,39 @@ pipeline {
     )
   }
   environment {
-    DOCKERHUB_USR = credentials('DOCKERHUB_USR')
+    DOCKERHUB_CREDENTIALS = credentials('DOCKERHUB_USR')
   }
 
   stages {
     stage('Checkout') {
       steps {
-        checkout([
-                $class                           : 'GitSCM',
-                branches                         : [[name: '*/master']],
-                doGenerateSubmoduleConfigurations: false
-        ])
+  checkout([$class: 'GitSCM', branches: [[name: '*/master']],
+         doGenerateSubmoduleConfigurations: false,
+         extensions: [],
+         submoduleCfg: [],
+         userRemoteConfigs: [[url: 'https://github.com/jason-website/explainable_ai_display.git']]])
+
       }
     }
 
     stage('Generate The Image') {
       steps {
+        echo "generate the image"
         sh '''
          set +x
-         ./ci/gen-image.sh
+          chmod +x ./ci/gen-image.sh
+          ./ci/gen-image.sh
          '''
-      }
+        }
     }
 
     stage('Push Image To Docker hub') {
       steps {
+        echo "push image to docker hub"
         sh '''
          set +x
-         ./ci/deploy.sh dev
+         chmod +x ./ci/push-image.sh
+         ./ci/push-image.sh
          '''
       }
     }
@@ -64,4 +69,5 @@ pipeline {
                   '''
               }
             }
+  }
 }
